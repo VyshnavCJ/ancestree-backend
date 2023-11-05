@@ -1,13 +1,5 @@
-import { errorHandler } from './errorHandler';
-import { responseHandler } from './responseHandler';
-import { methodNotAllowedHandler } from './methodNotAllowedHandler';
-import { pageNotFoundHandler } from './pageNotFoundHandler';
-import { initResLocalsHandler } from './initResLocalsHandler';
+const { errorHandler } = require('./errorHandler');
+const { notFound } = require('./notFound');
+const { auth } = require('./auth');
 
-export {
-  errorHandler,
-  responseHandler,
-  methodNotAllowedHandler,
-  pageNotFoundHandler,
-  initResLocalsHandler,
-};
+module.exports = { errorHandler, notFound, auth };
