@@ -1,1 +1,3 @@
-module.exports = require('./apiError');
+const { generateAPIError } = require('./customError');
+
+module.exports = generateAPIError;

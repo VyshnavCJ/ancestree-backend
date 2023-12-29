@@ -1,10 +1,8 @@
-const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const { generateAPIError } = require('.././utils/errors');
 
-module.exports.auth = (type) => {
+module.exports.auth = () => {
   return async (req, res, next) => {
-    // check header
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer'))
