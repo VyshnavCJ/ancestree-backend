@@ -1,6 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
 const generateAPIError = require('../../utils/errors');
-const User = require('./user.model');
 const services = require('./user.services');
 const { generateJwt } = require('../../utils');
 
