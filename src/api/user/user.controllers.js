@@ -36,7 +36,7 @@ module.exports.Login = async (req, res) => {
   const mobileNumber = req.body.mobileNumber;
   const password = req.body.password;
   const user = await services.verifyUser(mobileNumber, password);
-  const token = generateJwt({ user: user }, process.env.JWT_OTP_LIFETIME);
+  const token = generateJwt({ user: user }, process.env.JWT_LIFETIME);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'logged in',

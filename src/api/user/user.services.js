@@ -25,7 +25,7 @@ module.exports.sendOTP = async (mobileNumber) => {
 
 //Verify User
 module.exports.verifyUser = async (mobileNumber, password) => {
-  let firstTime = false;
+  let firstTime = true;
   const user = await User.findOne({ mobileNumber: mobileNumber }).select(
     '-location -createdAt -updatedAt -__v'
   );
@@ -33,7 +33,7 @@ module.exports.verifyUser = async (mobileNumber, password) => {
     const isCorrectPassword = await user.comparePassword(password);
     if (!isCorrectPassword)
       throw generateAPIError('Incorrect credentials', 401);
-    if (user.familyId) firstTime = true;
+    if (user.familyId) firstTime = false;
   } else throw generateAPIError('User not found', 404);
   return { ...user.mobileNumber, firstTime };
 };
