@@ -1,3 +1,3 @@
 const corsOptions = require('./cors.config');
-
-module.exports = { corsOptions };
+const cloudOptions = require('./cloudinary.config');
+module.exports = { corsOptions, cloudOptions };

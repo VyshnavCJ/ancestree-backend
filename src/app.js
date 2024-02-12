@@ -8,12 +8,19 @@ const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const fileUpload = require('express-fileupload');
-const { corsOptions } = require('./config');
+const { corsOptions, cloudOptions } = require('./config');
+const cloudinary = require('cloudinary').v2;
 require('express-async-errors');
 require('dotenv').config({ path: path.join(root_dir, `.env`) });
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API,
+  api_secret: process.env.CLOUD_API_SECRET
+});
 app.set('trust proxy', 1);
-app.use(fileUpload({ createParentPath: true }));
+app.use(express.static('./public'));
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cors(corsOptions));
 app.use(helmet());
 app.use(mongoSanitize({ allowDots: true }));

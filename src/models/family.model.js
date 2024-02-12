@@ -18,6 +18,10 @@ const FamilyScheme = new mongoose.Schema(
     },
     albumid: {
       type: [String]
+    },
+    image: {
+      type: String,
+      default: ''
     }
   },
   { timestamps: true }

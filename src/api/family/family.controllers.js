@@ -11,3 +11,19 @@ module.exports.CreateFamily = async (req, res) => {
     family: family
   });
 };
+
+module.exports.Upload = async (req, res) => {
+  if (!req.files) {
+    throw generateAPIError('No files uploaded', 404);
+  }
+  console.log(req);
+  const image = await services.UploadImage(req.files.image);
+  const family = await services.UpdateFamily(req.user.mobileNumber, {
+    image: image
+  });
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Image uploaded created',
+    family: family
+  });
+};
