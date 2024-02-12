@@ -2,6 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 const generateAPIError = require('../../utils/errors');
 const services = require('./user.services');
 const { generateJwt } = require('../../utils');
+const User = require('../../models/user.model');
 
 module.exports.Register = async (req, res) => {
   const isPresent = await services.findUser(req.body.mobileNumber);
@@ -61,8 +62,20 @@ module.exports.UpdateProfile = async (req, res) => {
     user: user
   });
 };
+
 module.exports.UpdateRef = async (req, res) => {
   const user = await services.refUpdate(req.user.mobileNumber, req.body.ref);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'profile updated',
+    user: user
+  });
+};
+
+module.exports.View = async (req, res) => {
+  const user = await User.findOne({
+    mobileNumber: req.user.mobileNumber
+  }).select('-password');
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'profile updated',

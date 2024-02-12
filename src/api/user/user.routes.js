@@ -10,4 +10,5 @@ userRouter.post('/forgot', user.Forgot);
 userRouter.post('/changePassword', user.ChangePassword);
 userRouter.put('/update', auth, user.UpdateProfile);
 userRouter.put('/refUpdate', auth, user.UpdateRef);
+userRouter.get('/view', auth, user.View);
 module.exports = userRouter;
