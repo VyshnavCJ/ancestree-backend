@@ -2,7 +2,7 @@ const User = require('../../models/user.model');
 const generateAPIError = require('../../utils/errors');
 const { generateOtp, fast2sms } = require('./user.helpers');
 const { generateJwt } = require('../../utils');
-
+const Family = require('../../models/family.model');
 //Find User
 module.exports.findUser = async (mobileNumber) => {
   const user = await User.findOne({ mobileNumber: mobileNumber });
@@ -41,7 +41,24 @@ module.exports.verifyUser = async (mobileNumber, password) => {
 //Change password
 module.exports.changePassword = async (mobileNumber, password) => {
   let user = await User.findOne({ mobileNumber: mobileNumber });
-  console.log(user);
   user.password = password;
   await user.save();
+};
+
+//update profile
+module.exports.UpdateProfile = async (mobileNumber, data) => {
+  let user = await User.findOne({ mobileNumber: mobileNumber });
+  if (data?.password) user.password = data.password;
+  else if (data?.email) user.email = data.email;
+  await user.save();
+  return user;
+};
+//update ref
+module.exports.refUpdate = async (mobileNumber, ref) => {
+  let user = await User.findOne({ mobileNumber: mobileNumber });
+  const family = await Family.findOne({ ref: ref });
+  if (family) user.familyId = family._id;
+  else throw generateAPIError('no family found', 401);
+  await user.save();
+  return user;
 };

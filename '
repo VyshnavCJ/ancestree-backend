@@ -9,5 +9,5 @@ userRouter.post('/login', user.Login);
 userRouter.post('/forgot', user.Forgot);
 userRouter.post('/changePassword', user.ChangePassword);
 userRouter.put('/update', auth, user.UpdateProfile);
-userRouter.put('/refUpdate', auth, user.UpdateRef);
+userRouter.put('/refUpdate', auth, user.UpdateProfile);
 module.exports = userRouter;

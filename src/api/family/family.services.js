@@ -31,7 +31,6 @@ module.exports.UploadImage = async (productImage) => {
 };
 
 module.exports.UpdateFamily = async (mobileNumber, data) => {
-  const user = await User.findOne({ mobileNumber: mobileNumber });
   const family = await Family.findById(user.familyId);
   if (data?.image) family.image = data.image;
   else if (data?.history) family.history = data.history;

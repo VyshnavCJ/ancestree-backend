@@ -52,3 +52,20 @@ module.exports.ChangePassword = async (req, res) => {
     msg: 'password changed'
   });
 };
+
+module.exports.UpdateProfile = async (req, res) => {
+  const user = await services.UpdateProfile(req.user.mobileNumber, req.body);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'profile updated',
+    user: user
+  });
+};
+module.exports.UpdateRef = async (req, res) => {
+  const user = await services.refUpdate(req.user.mobileNumber, req.body.ref);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'profile updated',
+    user: user
+  });
+};
