@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const geocoder = require('../../utils');
+const geocoder = require('../utils');
 
 const UserSchema = new mongoose.Schema(
   {

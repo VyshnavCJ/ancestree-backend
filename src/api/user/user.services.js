@@ -1,4 +1,4 @@
-const User = require('./user.model');
+const User = require('../../models/user.model');
 const generateAPIError = require('../../utils/errors');
 const { generateOtp, fast2sms } = require('./user.helpers');
 const { generateJwt } = require('../../utils');
@@ -35,7 +35,7 @@ module.exports.verifyUser = async (mobileNumber, password) => {
       throw generateAPIError('Incorrect credentials', 401);
     if (user.familyId) firstTime = false;
   } else throw generateAPIError('User not found', 404);
-  return { ...user.mobileNumber, firstTime };
+  return { mobileNumber, firstTime };
 };
 
 //Change password
