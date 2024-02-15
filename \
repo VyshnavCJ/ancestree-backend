@@ -31,6 +31,7 @@ module.exports.View = async (id) => {
 };
 
 module.exports.Edit = async (data) => {
+  console.log(data);
   const member = await Member.findOne({ memberId: data.memberId });
   if (data?.WmobileNumber) member.WmobileNumber = data.WmobileNumber;
   if (data?.email) member.email = data.email;
@@ -40,7 +41,7 @@ module.exports.Edit = async (data) => {
   if (data?.spouse) member.spouse = data.spouse;
   if (data?.occupation) member.occupation = data.occupation;
   if (data?.address) member.address = data.address;
-  if (data?.noOfChildren) member.noOfChildren = data.noOfChilder;
+  if (data?.noOfChildren) member.noOfChildren = data.noOfChildren;
   await member.save();
   return member;
 };

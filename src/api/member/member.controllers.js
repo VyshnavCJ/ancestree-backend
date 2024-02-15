@@ -17,3 +17,11 @@ module.exports.View = async (req, res) => {
     member: member
   });
 };
+module.exports.Edit = async (req, res) => {
+  const member = await services.Edit(req.body);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Member Updated',
+    member: member
+  });
+};
