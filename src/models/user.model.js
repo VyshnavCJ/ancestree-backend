@@ -40,8 +40,7 @@ const UserSchema = new mongoose.Schema(
       ref: 'Family'
     },
     memberId: {
-      type: mongoose.Types.ObjectId,
-      ref: 'Member'
+      type: String
     }
   },
   { timestamps: true }

@@ -37,7 +37,9 @@ app.use(
 const { errorHandler, notFound } = require('./middlewares');
 const userRouter = require('./api/user/user.routes');
 const familyRouter = require('./api/family/family.routes');
+const memberRouter = require('./api/member/member.routes');
 
+app.use('/api/v1/member', memberRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/family', familyRouter);
 app.use(notFound);
