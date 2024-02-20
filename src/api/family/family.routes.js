@@ -8,6 +8,6 @@ familyRouter.post('/upload', auth, family.Upload);
 familyRouter.put('/update', auth, family.UpdateFamily);
 familyRouter.post('/event/create', auth, family.CreateEvent);
 familyRouter.delete('/event/delete/:id', auth, family.DeleteEvent);
-familyRouter.get('/event/view', auth, family.ViewEvent);
-familyRouter.get('/event/notification', auth, family.EventNotification);
+familyRouter.get('/event/view/:date', auth, family.ViewEvent);
+familyRouter.get('/event/notification/:date', auth, family.EventNotification);
 module.exports = familyRouter;

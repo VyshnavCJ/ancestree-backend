@@ -66,19 +66,27 @@ module.exports.DeleteEvent = async (req, res) => {
 };
 
 module.exports.ViewEvent = async (req, res) => {
-  const events = await services.ViewEvent(req.user.mobileNumber);
+  const events = await services.ViewEvent(
+    req.user.mobileNumber,
+    req.params.date
+  );
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'View Event',
-    events: events
+    events: events.events,
+    todayEvents: events.todayEvents
   });
 };
 
 module.exports.EventNotification = async (req, res) => {
-  const minevents = await services.EventNotification(req.user.mobileNumber);
+  const minevents = await services.EventNotification(
+    req.user.mobileNumber,
+    req.params.date
+  );
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'Min view Events',
-    events: minevents
+    events: minevents.events,
+    todayEvents: minevents.todayEvents
   });
 };
