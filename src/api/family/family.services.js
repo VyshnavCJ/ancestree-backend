@@ -30,9 +30,8 @@ module.exports.UploadImage = async (productImage) => {
   return result.secure_url;
 };
 
-module.exports.UpdateFamily = async (mobileNumber, data) => {
-  const user = await User.findOne({ mobileNumber: mobileNumber });
-  const family = await Family.findById(user.familyId);
+module.exports.UpdateFamily = async (id, data) => {
+  const family = await Family.findById(id);
   if (data?.image) family.image = data.image;
   else if (data?.history) family.history = data.history;
   else if (data?.name) family.name = data.name;
@@ -40,9 +39,8 @@ module.exports.UpdateFamily = async (mobileNumber, data) => {
   return family;
 };
 
-module.exports.CreateEvent = async (mobileNumber, data) => {
-  const user = await User.findOne({ mobileNumber: mobileNumber });
-  const family = await Family.findById(user.familyId);
+module.exports.CreateEvent = async (id, data) => {
+  const family = await Family.findById(id);
   data.familyId = family._id;
   await Event.create(data);
 };
@@ -51,9 +49,8 @@ module.exports.DeleteEvent = async (id) => {
   await Event.deleteOne({ _id: id });
 };
 
-module.exports.ViewEvent = async (mobileNumber, date) => {
-  const user = await User.findOne({ mobileNumber: mobileNumber });
-  const family = await Family.findById(user.familyId);
+module.exports.ViewEvent = async (id, date) => {
+  const family = await Family.findById(id);
   const todayEvents = await Event.find({
     familyId: family._id,
     date: date
@@ -64,9 +61,8 @@ module.exports.ViewEvent = async (mobileNumber, date) => {
   return { events, todayEvents };
 };
 
-module.exports.EventNotification = async (mobileNumber, date) => {
-  const user = await User.findOne({ mobileNumber: mobileNumber });
-  const family = await Family.findById(user.familyId);
+module.exports.EventNotification = async (id, date) => {
+  const family = await Family.findById(id);
   const todayEvents = await Event.find({ familyId: family._id, date: date })
     .select('-place -createdAt -updatedAt -familyId -__v')
     .sort({ date: 'asc' });

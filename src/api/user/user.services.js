@@ -29,13 +29,14 @@ module.exports.verifyUser = async (mobileNumber, password) => {
   const user = await User.findOne({ mobileNumber: mobileNumber }).select(
     '-location -createdAt -updatedAt -__v'
   );
+  const familyId = user.familyId;
   if (user) {
     const isCorrectPassword = await user.comparePassword(password);
     if (!isCorrectPassword)
       throw generateAPIError('Incorrect credentials', 401);
     if (user.familyId) firstTime = false;
   } else throw generateAPIError('User not found', 404);
-  return { mobileNumber, firstTime };
+  return { mobileNumber, firstTime, familyId };
 };
 
 //Change password

@@ -41,7 +41,7 @@ module.exports.Home = async (req, res) => {
 };
 
 module.exports.UpdateFamily = async (req, res) => {
-  const family = await services.UpdateFamily(req.user.mobileNumber, req.body);
+  const family = await services.UpdateFamily(req.user.familyId, req.body);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'Family updated',

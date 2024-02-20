@@ -3,10 +3,13 @@ const Family = require('../../models/family.model');
 const Member = require('../../models/member.model');
 const generateAPIError = require('../../utils/errors');
 
-module.exports.CreateMember = async (mobileNumber, data) => {
+module.exports.CreateMember = async (familyId, mobileNumber, data) => {
   if (data.parentId.length == 0) data.memberId = 1;
   else {
-    const parent = await Member.findOne({ memberId: data.parentId });
+    const parent = await Member.findOne({
+      memberId: data.parentId,
+      familyId: familyId
+    });
     if (
       data.birthOrder > parent.noOfChildren ||
       parent.childrenAdd.includes(data.birthOrder)
@@ -24,14 +27,17 @@ module.exports.CreateMember = async (mobileNumber, data) => {
   return member;
 };
 
-module.exports.View = async (id) => {
-  const member = await Member.findOne({ memberId: id });
+module.exports.View = async (familyId, id) => {
+  const member = await Member.findOne({ memberId: id, familyId: familyId });
   if (!member) throw generateAPIError('Member not found', 401);
   return member;
 };
 
-module.exports.Edit = async (data) => {
-  const member = await Member.findOne({ memberId: data.memberId });
+module.exports.Edit = async (familyId, data) => {
+  const member = await Member.findOne({
+    memberId: data.memberId,
+    familyId: familyId
+  });
   if (data?.WmobileNumber) member.WmobileNumber = data.WmobileNumber;
   if (data?.email) member.email = data.email;
   if (data?.dob) member.dob = data.dob;

@@ -26,7 +26,7 @@ module.exports.Forgot = async (req, res) => {
   });
 };
 module.exports.CreateUser = async (req, res) => {
-  const user = await services.createUser(req.body);
+  await services.createUser(req.body);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'user created'
