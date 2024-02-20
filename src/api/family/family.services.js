@@ -1,13 +1,13 @@
 const Family = require('../../models/family.model');
 const generateAPIError = require('../../utils/errors');
-const { generateJwt } = require('../../utils');
 const User = require('../../models/user.model');
+const Event = require('../../models/event.model');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
 module.exports.Create = async (data, mobileNumber) => {
   const family = await Family.create(data);
-  const user = await User.updateOne(
+  await User.updateOne(
     { mobileNumber: mobileNumber },
     { familyId: family._id }
   );
@@ -31,10 +31,38 @@ module.exports.UploadImage = async (productImage) => {
 };
 
 module.exports.UpdateFamily = async (mobileNumber, data) => {
+  const user = await User.findOne({ mobileNumber: mobileNumber });
   const family = await Family.findById(user.familyId);
   if (data?.image) family.image = data.image;
   else if (data?.history) family.history = data.history;
   else if (data?.name) family.name = data.name;
   await family.save();
   return family;
+};
+
+module.exports.CreateEvent = async (mobileNumber, data) => {
+  const user = await User.findOne({ mobileNumber: mobileNumber });
+  const family = await Family.findById(user.familyId);
+  data.familyId = family._id;
+  await Event.create(data);
+};
+
+module.exports.DeleteEvent = async (id) => {
+  await Event.deleteOne({ _id: id });
+};
+
+module.exports.ViewEvent = async (mobileNumber) => {
+  const user = await User.findOne({ mobileNumber: mobileNumber });
+  const family = await Family.findById(user.familyId);
+  const events = await Event.find({ familyId: family._id });
+  return events;
+};
+
+module.exports.EventNotification = async (mobileNumber) => {
+  const user = await User.findOne({ mobileNumber: mobileNumber });
+  const family = await Family.findById(user.familyId);
+  const events = await Event.find({ familyId: family._id }).select(
+    '-place -createdAt -updatedAt -familyId -__v'
+  );
+  return events;
 };

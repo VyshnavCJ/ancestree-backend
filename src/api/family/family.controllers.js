@@ -48,3 +48,37 @@ module.exports.UpdateFamily = async (req, res) => {
     home: family
   });
 };
+
+module.exports.CreateEvent = async (req, res) => {
+  await services.CreateEvent(req.user.mobileNumber, req.body);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Event Created'
+  });
+};
+
+module.exports.DeleteEvent = async (req, res) => {
+  await services.DeleteEvent(req.params.id);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Event Deleted'
+  });
+};
+
+module.exports.ViewEvent = async (req, res) => {
+  const events = await services.ViewEvent(req.user.mobileNumber);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'View Event',
+    events: events
+  });
+};
+
+module.exports.EventNotification = async (req, res) => {
+  const minevents = await services.EventNotification(req.user.mobileNumber);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Min view Events',
+    events: minevents
+  });
+};
