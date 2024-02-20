@@ -54,15 +54,17 @@ module.exports.DeleteEvent = async (id) => {
 module.exports.ViewEvent = async (mobileNumber) => {
   const user = await User.findOne({ mobileNumber: mobileNumber });
   const family = await Family.findById(user.familyId);
-  const events = await Event.find({ familyId: family._id });
+  const events = await Event.find({ familyId: family._id }).sort({
+    date: 'asc'
+  });
   return events;
 };
 
 module.exports.EventNotification = async (mobileNumber) => {
   const user = await User.findOne({ mobileNumber: mobileNumber });
   const family = await Family.findById(user.familyId);
-  const events = await Event.find({ familyId: family._id }).select(
-    '-place -createdAt -updatedAt -familyId -__v'
-  );
+  const events = await Event.find({ familyId: family._id })
+    .select('-place -createdAt -updatedAt -familyId -__v')
+    .sort({ date: 'asc' });
   return events;
 };
