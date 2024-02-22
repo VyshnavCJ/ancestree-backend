@@ -115,3 +115,6 @@ dist
 
 #google cred
 googleCred.json
+
+#tmp folder
+./tmp
