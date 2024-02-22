@@ -93,5 +93,5 @@ module.exports.UploadFilesAlbum = async (file) => {
       },
       fields: 'id,name'
     });
-  console.log(`Uploaded file ${data.id}`);
+  fs.unlinkSync(file.tempFilePath);
 };
