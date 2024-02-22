@@ -12,7 +12,7 @@ const { corsOptions, cloudOptions } = require('./config');
 const cloudinary = require('cloudinary').v2;
 require('express-async-errors');
 require('dotenv').config({ path: path.join(root_dir, `.env`) });
-
+// rewrite for security
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API,

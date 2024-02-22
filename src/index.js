@@ -1,5 +1,5 @@
 const { app } = require('./app');
-const { connectDB } = require('./utils');
+const { connectDB, googleAuthorize } = require('./utils');
 const port = process.env.PORT || 5000;
 
 const start = async () => {

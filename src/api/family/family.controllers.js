@@ -1,7 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
-const generateAPIError = require('../../utils/errors');
+const { generateAPIError } = require('../../utils/errors');
 const services = require('./family.services');
-const { generateJwt } = require('../../utils');
 const Family = require('../../models/family.model');
 const User = require('../../models/user.model');
 
@@ -20,7 +19,7 @@ module.exports.Upload = async (req, res) => {
     throw generateAPIError('No files uploaded', 404);
   }
   const image = await services.UploadImage(req.files.image);
-  const family = await services.UpdateFamily(req.user.mobileNumber, {
+  const family = await services.UpdateFamily(req.user.familyId, {
     image: image
   });
   return res.status(StatusCodes.OK).json({
@@ -31,8 +30,7 @@ module.exports.Upload = async (req, res) => {
 };
 
 module.exports.Home = async (req, res) => {
-  const user = await User.findOne({ mobileNumber: req.user.mobileNumber });
-  const family = await Family.findById(user.familyId);
+  const family = await Family.findById(req.user.familyId);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'Home page',
@@ -50,7 +48,7 @@ module.exports.UpdateFamily = async (req, res) => {
 };
 
 module.exports.CreateEvent = async (req, res) => {
-  await services.CreateEvent(req.user.mobileNumber, req.body);
+  await services.CreateEvent(req.user.familyId, req.body);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'Event Created'
@@ -66,10 +64,7 @@ module.exports.DeleteEvent = async (req, res) => {
 };
 
 module.exports.ViewEvent = async (req, res) => {
-  const events = await services.ViewEvent(
-    req.user.mobileNumber,
-    req.params.date
-  );
+  const events = await services.ViewEvent(req.user.familyId, req.params.date);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'View Event',
@@ -80,7 +75,7 @@ module.exports.ViewEvent = async (req, res) => {
 
 module.exports.EventNotification = async (req, res) => {
   const minevents = await services.EventNotification(
-    req.user.mobileNumber,
+    req.user.familyId,
     req.params.date
   );
   return res.status(StatusCodes.OK).json({
@@ -90,3 +85,40 @@ module.exports.EventNotification = async (req, res) => {
     todayEvents: minevents.todayEvents
   });
 };
+
+module.exports.AlbumSingleAdd = async (req, res) => {
+  if (!req.files) {
+    throw generateAPIError('No files uploaded', 404);
+  }
+  await services.UploadFilesAlbum(req.files.image);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Album files added'
+  });
+};
+
+// module.exports.AlbumView = async (req, res) => {
+//   const minevents = await services.EventNotification(
+//     req.user.mobileNumber,
+//     req.params.date
+//   );
+//   return res.status(StatusCodes.OK).json({
+//     success: true,
+//     msg: 'Min view Events',
+//     events: minevents.events,
+//     todayEvents: minevents.todayEvents
+//   });
+// };
+//
+// module.exports.AlbumSingle = async (req, res) => {
+//   const minevents = await services.EventNotification(
+//     req.user.mobileNumber,
+//     req.params.date
+//   );
+//   return res.status(StatusCodes.OK).json({
+//     success: true,
+//     msg: 'Min view Events',
+//     events: minevents.events,
+//     todayEvents: minevents.todayEvents
+//   });
+// };

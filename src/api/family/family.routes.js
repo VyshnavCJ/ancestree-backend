@@ -2,6 +2,9 @@ const express = require('express');
 const familyRouter = express.Router();
 const family = require('./family.controllers');
 const { auth } = require('../../middlewares');
+const multer = require('multer');
+const upload = multer();
+
 familyRouter.post('/create', auth, family.CreateFamily);
 familyRouter.get('/home', auth, family.Home);
 familyRouter.post('/upload', auth, family.Upload);
@@ -10,4 +13,8 @@ familyRouter.post('/event/create', auth, family.CreateEvent);
 familyRouter.delete('/event/delete/:id', auth, family.DeleteEvent);
 familyRouter.get('/event/view/:date', auth, family.ViewEvent);
 familyRouter.get('/event/notification/:date', auth, family.EventNotification);
+// familyRouter.post('/album/create', auth, family.AlbumCreate);
+// familyRouter.get('/album/view/:id', auth, family.AlbumSingleView);
+familyRouter.post('/album/upload/', auth, family.AlbumSingleAdd);
+// familyRouter.get('/album/view', auth, family.AlbumView);
 module.exports = familyRouter;

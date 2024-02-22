@@ -4,7 +4,10 @@ const User = require('../../models/user.model');
 const Event = require('../../models/event.model');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
-
+const stream = require('stream');
+const { google } = require('googleapis');
+const path = require('path');
+const { auth } = require('../../config');
 module.exports.Create = async (data, mobileNumber) => {
   const family = await Family.create(data);
   await User.updateOne(
@@ -20,7 +23,7 @@ module.exports.UploadImage = async (productImage) => {
   }
   const maxSize = 100000;
   if (productImage.size > maxSize) {
-    throw new generateAPIError('Plz upload image smaller than 100kb', 404);
+    throw generateAPIError('Plz upload image smaller than 100kb', 404);
   }
   const result = await cloudinary.uploader.upload(productImage.tempFilePath, {
     use_filename: true,
@@ -71,4 +74,24 @@ module.exports.EventNotification = async (id, date) => {
     .sort({ date: 'asc' })
     .limit(25);
   return { events, todayEvents };
+};
+
+module.exports.UploadFilesAlbum = async (file) => {
+  const { data } = await google
+    .drive({
+      version: 'v3',
+      auth: auth
+    })
+    .files.create({
+      media: {
+        mimeType: file.mimeType,
+        body: fs.createReadStream(file.tempFilePath)
+      },
+      requestBody: {
+        name: 'pic',
+        parents: ['1TsGsVMt5KwFrdVwQ4mUo4xhluuvuFVWy']
+      },
+      fields: 'id,name'
+    });
+  console.log(`Uploaded file ${data.id}`);
 };

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ancestree-415015",
+  "private_key_id": "e8c52ab6fd0b30f7b11efc28f76ba40a47e901a6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC+8vciIB9jkz/a\nFVK265lW+1YrrZuFjZ3Bc8jvSpZogqpjSgVs49hXEeBhl60WJ9z55GVbdN6zVePK\nvKgH+hgmO8pt91w+WzQCeEj+JASYoIGUrIlvMdQbNt7tUlwOU+DFs4ppPPOi2INu\npqVYvvVNdDON2r/pW8HSg8j5MU1f3eE3/wML2g6HNAGIDX5Ax54HnBleTBOQZwKu\nTsZD9M6jxR3P2mAd8VGTukgj+OXtn9qFtazZA0KeP90mZzF4TDe61aoS+EzYuvwo\nM031oCqT+pmw8YZyZdKLa6P1csSwyL9TUyx5sMsRdXk6YpDTflUNixlQnjAXkXN0\ntd4PcaJfAgMBAAECggEAANit3MJcsUHNViejCrmHn/mUO7RUzKZAjUN4oArqGMN/\ngtoopP9rjZNANd6Iv2Dk21y2UE330L6wOE1Wx1ZF9iFst8kRaRtZYytqU2oQdSa8\n/E45e7syT/6RxWaIju2zQN0XX3kMMWwZRQvLDtYl2zaJJfdSw3OLK+Y2pVghGiwt\nJaUAY3PdXOB+SePo0/tn1Cd/3dR6RliRxpbAYF9hp5VjmFb5bnxqMn/y/A8lw9fU\nxORvp2P9zgGd5wpHfK/1Kf5xRa2Lx/d7qilyNd4t0HHSfOE5yrIhDAA6ESmzkQQr\nH6t6hHTfS39BHJR1NVS0ejNekEiU0N0FYjIqrwIViQKBgQDm2YVivL0TdjacwoVX\nqYTew/ZRhX5y0dIpiE0eiyP+ppIuMLyaj3b8+yXU5KGJ3WOHbiaaK7HL8qe9YoHV\nMW4+qdGY/qQ7hDaUw20FvNhHGWGsye6bRjALPjoDxuRonIFPdSb3eEGW73xC11UG\nAU05bPzww/g/72qSz5LXLqz9uQKBgQDTwJoz9QDxmbVtPvfgL/MpZpugyDJv/box\nktDG5YgWFBKdBij9HA1V/jvmPecoFB3SrL+AGna+fkeSMCDR86OAYR1jXoNABkty\nuNXQ+k9wXkcHmifHjTdTvqHsgZi7gHbmiXvLUGcNCF/H7/1tC4x8NL0SYjiTrOwO\nuAoEhVLs1wKBgQC6iZiUAYkTWdmlcDXJcUzRqS24EBPuegfF0cLnZG2wjy7eLjmo\n9zaiE9stHZY+zetn+yUsPRSNhcXvbdMVz7yS3Cxm4ZUaFqr4KLZHBaMKSMM5mW66\nf8vAugatGKFmuthuuW7EV6NAcMJLTK8CjDi3p474ipJmL3NBsIOqZ6gX2QKBgQCu\nnJIL6iq/D3sV/Oi2C5Q+PYhzyuIci2OwYVqbyMaxPhgjN+Mw5KLymFSYhc9Js1zs\nTtsTLb9hUgx+tgU6W+glgu+S82rTrt0kWtqmGuLKzFNSJ4JKAV7wRbCMsElbxJFH\nhXN5snFnw9IHsxSNiQptmaeXszroO53kfUp1c+NvvQKBgQCXT705QPYzubj43fEW\nnjfPH8/VbS0tXexXNaJpqTd0syqc+C8fI/cnY3OdSbsQhm2JXDAXxW+JIVoGFm0U\nK4D6rbO4/xu9gyt1WTRY9zRinGoZl1GEaxZiRNH5POuhThGdxPeIvdbQeIUHOZhs\ntyq7kR/jocElbaAt9Slmft9rBA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "ancestree@ancestree-415015.iam.gserviceaccount.com",
+  "client_id": "112895838071567507182",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ancestree%40ancestree-415015.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
