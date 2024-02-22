@@ -8,6 +8,7 @@ const stream = require('stream');
 const { google } = require('googleapis');
 const path = require('path');
 const { auth } = require('../../config');
+const { drive } = require('../../utils');
 module.exports.Create = async (data, mobileNumber) => {
   const family = await Family.create(data);
   await User.updateOne(
@@ -76,22 +77,51 @@ module.exports.EventNotification = async (id, date) => {
   return { events, todayEvents };
 };
 
-module.exports.UploadFilesAlbum = async (file) => {
-  const { data } = await google
-    .drive({
-      version: 'v3',
-      auth: auth
-    })
-    .files.create({
-      media: {
-        mimeType: file.mimeType,
-        body: fs.createReadStream(file.tempFilePath)
-      },
-      requestBody: {
-        name: 'pic',
-        parents: ['1TsGsVMt5KwFrdVwQ4mUo4xhluuvuFVWy']
-      },
-      fields: 'id,name'
-    });
+module.exports.UploadFilesAlbum = async (file, albumId) => {
+  await drive.files.create({
+    media: {
+      mimeType: file.mimeType,
+      body: fs.createReadStream(file.tempFilePath)
+    },
+    requestBody: {
+      name: file.name,
+      parents: [albumId]
+    },
+    fields: 'id,name'
+  });
   fs.unlinkSync(file.tempFilePath);
+};
+
+module.exports.CreateFolder = async (name, familyId) => {
+  const fileMetadata = {
+    name: name,
+    mimeType: 'application/vnd.google-apps.folder',
+    parents: ['1TsGsVMt5KwFrdVwQ4mUo4xhluuvuFVWy']
+  };
+  const file = await drive.files.create({
+    resource: fileMetadata,
+    fields: 'id'
+  });
+  const family = await Family.findById(familyId);
+  family.albumid.push({ name: name, id: file.data.id });
+  await family.save();
+};
+
+module.exports.Albums = async (familyId) => {
+  const family = await Family.findById(familyId);
+  return family.albumid;
+};
+
+module.exports.AlbumView = async (albumId) => {
+  let files = [];
+  const res = await drive.files.list({
+    q: `'${albumId}' in parents`,
+    fields: 'nextPageToken, files(id, name)',
+    spaces: 'drive'
+  });
+  // `https://drive.google.com/file/d/${res.files.id}/view`
+  res.data.files.forEach(function (file) {
+    files.push(`https://drive.google.com/file/d/${file.id}/view`);
+  });
+  return files;
 };

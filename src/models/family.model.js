@@ -17,7 +17,7 @@ const FamilyScheme = new mongoose.Schema(
       type: String
     },
     albumid: {
-      type: [String]
+      type: [{ name: String, id: String }]
     },
     image: {
       type: String,

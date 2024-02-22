@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { generateAPIError } = require('../../utils/errors');
+const generateAPIError = require('../../utils/errors');
 const services = require('./family.services');
 const Family = require('../../models/family.model');
 const User = require('../../models/user.model');
@@ -90,35 +90,40 @@ module.exports.AlbumSingleAdd = async (req, res) => {
   if (!req.files) {
     throw generateAPIError('No files uploaded', 404);
   }
-  await services.UploadFilesAlbum(req.files.image);
+  const length = req.files.files.length;
+  if (length)
+    for (let f = 0; f < req.files.files.length; f++)
+      await services.UploadFilesAlbum(req.files.files[f], req.params.id);
+  else await services.UploadFilesAlbum(req.files.files, req.params.id);
+
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'Album files added'
   });
 };
 
-// module.exports.AlbumView = async (req, res) => {
-//   const minevents = await services.EventNotification(
-//     req.user.mobileNumber,
-//     req.params.date
-//   );
-//   return res.status(StatusCodes.OK).json({
-//     success: true,
-//     msg: 'Min view Events',
-//     events: minevents.events,
-//     todayEvents: minevents.todayEvents
-//   });
-// };
-//
-// module.exports.AlbumSingle = async (req, res) => {
-//   const minevents = await services.EventNotification(
-//     req.user.mobileNumber,
-//     req.params.date
-//   );
-//   return res.status(StatusCodes.OK).json({
-//     success: true,
-//     msg: 'Min view Events',
-//     events: minevents.events,
-//     todayEvents: minevents.todayEvents
-//   });
-// };
+module.exports.AlbumCreate = async (req, res) => {
+  await services.CreateFolder(req.body.name, req.user.familyId);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Album created'
+  });
+};
+
+module.exports.AlbumView = async (req, res) => {
+  const albums = await services.Albums(req.user.familyId);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Albums',
+    albums: albums
+  });
+};
+
+module.exports.AlbumSingleView = async (req, res) => {
+  const albumFiles = await services.AlbumView(req.params.id);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'files',
+    albumsFiles: albumFiles
+  });
+};
