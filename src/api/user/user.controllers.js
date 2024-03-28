@@ -65,10 +65,12 @@ module.exports.UpdateProfile = async (req, res) => {
 
 module.exports.UpdateRef = async (req, res) => {
   const user = await services.refUpdate(req.user.mobileNumber, req.body.ref);
+  const token = generateJwt({ user }, process.env.JWT_LIFETIME);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'profile updated',
-    user: user
+    user: user,
+    token: token
   });
 };
 

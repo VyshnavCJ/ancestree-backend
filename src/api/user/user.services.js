@@ -61,5 +61,7 @@ module.exports.refUpdate = async (mobileNumber, ref) => {
   if (family) user.familyId = family._id;
   else throw generateAPIError('no family found', 401);
   await user.save();
-  return user;
+  const firstTime = true;
+  const familyId = user.familyId;
+  return { mobileNumber, firstTime, familyId };
 };

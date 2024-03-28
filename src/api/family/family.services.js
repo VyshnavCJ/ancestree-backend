@@ -4,11 +4,8 @@ const User = require('../../models/user.model');
 const Event = require('../../models/event.model');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
-const stream = require('stream');
-const { google } = require('googleapis');
-const path = require('path');
-const { auth } = require('../../config');
 const { drive } = require('../../utils');
+
 module.exports.Create = async (data, mobileNumber) => {
   const family = await Family.create(data);
   await User.updateOne(
@@ -46,6 +43,8 @@ module.exports.UpdateFamily = async (id, data) => {
 module.exports.CreateEvent = async (id, data) => {
   const family = await Family.findById(id);
   data.familyId = family._id;
+  const users = await User.find({ familyId: id });
+  console.log(users);
   await Event.create(data);
 };
 
