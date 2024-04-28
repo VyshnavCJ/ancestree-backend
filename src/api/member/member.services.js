@@ -3,6 +3,8 @@ const Family = require('../../models/family.model');
 const Member = require('../../models/member.model');
 const generateAPIError = require('../../utils/errors');
 const { treeFileUpdate, memberTreePath } = require('./member.helpers');
+const fs = require('fs');
+const { drive } = require('../../utils');
 
 module.exports.CreateMember = async (familyId, mobileNumber, data) => {
   if (data.parentId.length == 0) {
@@ -67,4 +69,20 @@ module.exports.MemberSearch = async (familyId, pattern) => {
     name: { $regex: new RegExp(pattern, 'i') }
   }).select('name memberId WmobileNumber');
   return memberList;
+};
+
+module.exports.Upload = async (image) => {
+    const pic = await drive.files.create({
+        media: {
+            mimeType: image.mimeType,
+            body: fs.createReadStream(image.tempFilePath)
+        },
+        requestBody: {
+            name: image.name,
+            parents: ['1TsGsVMt5KwFrdVwQ4mUo4xhluuvuFVWy']
+        },
+        fields: 'id,name'
+    });
+    fs.unlinkSync(image.tempFilePath);
+    return pic.id
 };

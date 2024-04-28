@@ -62,6 +62,9 @@ const MemberSchema = new mongoose.Schema(
     },
     childrenAdd: {
       type: [Number]
+    },
+    picId:{
+        type:String
     }
   },
   { timestamps: true }

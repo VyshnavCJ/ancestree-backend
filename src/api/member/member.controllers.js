@@ -28,9 +28,21 @@ module.exports.Edit = async (req, res) => {
     success: true,
     msg: 'Member Updated',
     member: member
-  });
+    });
 };
 
+module.exports.UploadPic = async (req, res) => {
+  if (!req.files) {
+    throw generateAPIError('No files uploaded', 404);
+  }
+   const picId = await services.Upload(req.files.image);
+
+    return res.status(StatusCodes.OK).json({
+        success: true,
+        msg: 'Member pic uploaded',
+        picId:picId
+    });
+};
 module.exports.Search = async (req, res) => {
   const member = await services.Search(req.user.familyId, req.params.id);
   return res.status(StatusCodes.OK).json({
