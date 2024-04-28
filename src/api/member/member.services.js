@@ -84,5 +84,5 @@ module.exports.Upload = async (image) => {
         fields: 'id,name'
     });
     fs.unlinkSync(image.tempFilePath);
-    return pic
+    return pic.data.id
 };
