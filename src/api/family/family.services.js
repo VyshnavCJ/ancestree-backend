@@ -77,7 +77,7 @@ module.exports.CreateEvent = async (id, data) => {
     from: process.env.GMAIL,
     to: emails,
     subject: 'AncesTree:New Event in coming',
-    text: `Greetings from AncesTree\nNew Event is comming on ${data.date} at ${data.time}\nEvent Name: ${data.name}\nPlace of Event: ${data.place}\nEvent Details \n${data.details} `
+    text: `Dear AncesTree Member,\nA new family event is coming soon...\nEvent Details:\n🌟 Event Name: ${data.name}\n📍 Location: ${data.place}\n📅 Date: ${data.date}\n🕗 Time: ${data.time}\n\nDetails of the event:\n${data.details}\n\nWarm regards,\nAncesTree`
   };
   transposter.sendMail(mailOptions);
   await Event.create(data);
