@@ -37,8 +37,7 @@ module.exports.Tree = async (req, res) => {
   });
 };
 module.exports.TreeMobile = async (req, res) => {
-  const user = await User.findById(req.body.userId);
-  console.log(user);
+  const user = await User.findById(req.params.id);
   const family = await Family.findById(user.familyId);
   const file = await drive.files.get({
     fileId: family.treeFile,
