@@ -18,4 +18,5 @@ familyRouter.get('/album/view/:id', auth, family.AlbumSingleView);
 familyRouter.post('/album/upload/:id', auth, family.AlbumSingleAdd);
 familyRouter.get('/album/view', auth, family.AlbumView);
 familyRouter.get('/tree', auth, family.Tree);
+familyRouter.get('/treeMobile', family.TreeMobile);
 module.exports = familyRouter;

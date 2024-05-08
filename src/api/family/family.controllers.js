@@ -36,6 +36,21 @@ module.exports.Tree = async (req, res) => {
     tree: tree
   });
 };
+module.exports.TreeMobile = async (req, res) => {
+  const user = await User.findById(req.body.userId);
+  console.log(user);
+  const family = await Family.findById(user.familyId);
+  const file = await drive.files.get({
+    fileId: family.treeFile,
+    alt: 'media'
+  });
+  const tree = file.data;
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'Tree link',
+    tree: tree
+  });
+};
 module.exports.Upload = async (req, res) => {
   if (!req.files) {
     throw generateAPIError('No files uploaded', 404);
