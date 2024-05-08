@@ -10,4 +10,5 @@ userRouter.post('/forgot', user.Forgot);
 userRouter.post('/changePassword', user.ChangePassword);
 userRouter.put('/refUpdate', auth, user.UpdateRef);
 userRouter.get('/view', auth, user.View);
+userRouter.post('/mobile/changePassword', auth, user.mobileChangePassword);
 module.exports = userRouter;

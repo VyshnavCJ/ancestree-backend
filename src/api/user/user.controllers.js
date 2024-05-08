@@ -60,6 +60,17 @@ module.exports.ChangePassword = async (req, res) => {
   });
 };
 
+module.exports.mobileChangePassword = async (req, res) => {
+  const user = await User.findOne({ mobileNumber: req.body.mobileNumber });
+  const isMatch = await user.comparePassword(req.body.currentPassword);
+  if (isMatch)
+    await services.changePassword(req.body.mobileNumber, req.body.newPassword);
+  else throw generateAPIError('Wrong password', 404);
+  return res.status(StatusCodes.OK).json({
+    success: true,
+    msg: 'password changed'
+  });
+};
 module.exports.UpdateProfile = async (req, res) => {
   const user = await services.UpdateProfile(req.user.mobileNumber, req.body);
   return res.status(StatusCodes.OK).json({
