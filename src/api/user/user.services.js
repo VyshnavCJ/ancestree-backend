@@ -48,8 +48,8 @@ module.exports.verifyUser = async (mobileNumber, password) => {
 };
 
 //Change password
-module.exports.changePassword = async (mobileNumber, password) => {
-  let user = await User.findOne({ mobileNumber: mobileNumber });
+module.exports.changePassword = async (email, password) => {
+  let user = await User.findOne({ email: email });
   user.password = password;
   await user.save();
 };

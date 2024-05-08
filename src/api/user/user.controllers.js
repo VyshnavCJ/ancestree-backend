@@ -53,7 +53,7 @@ module.exports.Login = async (req, res) => {
 };
 
 module.exports.ChangePassword = async (req, res) => {
-  await services.changePassword(req.body.mobileNumber, req.body.password);
+  await services.changePassword(req.body.email, req.body.password);
   return res.status(StatusCodes.OK).json({
     success: true,
     msg: 'password changed'
@@ -61,10 +61,10 @@ module.exports.ChangePassword = async (req, res) => {
 };
 
 module.exports.mobileChangePassword = async (req, res) => {
-  const user = await User.findOne({ mobileNumber: req.body.mobileNumber });
+  const user = await User.findOne({ email: req.body.email });
   const isMatch = await user.comparePassword(req.body.currentPassword);
   if (isMatch)
-    await services.changePassword(req.body.mobileNumber, req.body.newPassword);
+    await services.changePassword(req.body.email, req.body.newPassword);
   else throw generateAPIError('Wrong password', 404);
   return res.status(StatusCodes.OK).json({
     success: true,
